@@ -1,7 +1,8 @@
 <script setup>
 import SearchBar from '../components/Searchbar/SearchBar.vue';
 import CardsSection from '../components/CardsSection/CardsSection.vue';
-import { ref, computed, onMounted, toRef, onUpdated } from 'vue';
+import ButtonComponent from '../components/Button/ButtonComponent.vue'
+import { ref, computed, onMounted, toRef } from 'vue';
 
 const props = defineProps({
   url: {
@@ -28,18 +29,29 @@ onMounted(async () => {
   data.value = prematureData.results;
 });
 
-onUpdated(async () => {
-  const response = await fetch(url.value);
-  const prematureData = await response.json();
-  data.value = prematureData.results;
-})
-
 // Creates a variable, filteredData that is just the data that we got from the call without changing the original values (so we can reuse them without the need to re-fetch)
 const filteredData = computed(() => {
   return data.value.filter((element) => {
     return element.name.first.toLocaleLowerCase().includes(search.value.toLocaleLowerCase());
   });
 });
+
+const nextPage = () => {
+  console.log('entrou')
+  console.log(filteredData.value.length)
+  const upperLimit = Math.floor(filteredData.value.length / 10);
+  console.log(upperLimit)
+  console.log(page.value)
+
+  if (page.value >= upperLimit - 1) return console.log('foi erraddo');
+  console.log('saiu')
+  return page.value++;
+}
+
+const previousPage = () => {
+  if (page.value <= 0) return;
+  return page.value--;
+}
 </script>
 
 <template>
@@ -62,8 +74,8 @@ const filteredData = computed(() => {
       </div>
     </div>
   </div>
-  <button @click="page--">Back</button>
-  <button @click="page++">next</button>
+  <ButtonComponent @click="previousPage" title="Previous Page" />
+  <ButtonComponent @click="nextPage" title="Next Page" />
 </template>
 
 <style scoped>
