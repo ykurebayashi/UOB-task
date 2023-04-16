@@ -2,7 +2,7 @@
 import SearchBar from '../components/Searchbar/SearchBar.vue';
 import CardsSection from '../components/CardsSection/CardsSection.vue';
 import ButtonComponent from '../components/Button/ButtonComponent.vue'
-import { ref, computed, onMounted, toRef } from 'vue';
+import { ref, computed, onMounted, toRefs } from 'vue';
 
 const props = defineProps({
   url: {
@@ -19,8 +19,8 @@ const data = ref([]);
 const search = ref('');
 const page = ref(0);
 const filter = ref();
-const url = toRef(props, 'url');
-const showSearch = toRef(props, 'showSearch');
+const { url, showSearch } = toRefs(props);
+
 
 onMounted(async () => {
   const response = await fetch(url.value);
@@ -29,6 +29,7 @@ onMounted(async () => {
 });
 
 function applyFilter(data, filter) {
+  page.value = 0;
   let tempData = data.filter((element) => {
     return element.name.first.toLocaleLowerCase().includes(search.value.toLocaleLowerCase());
   });
@@ -71,6 +72,7 @@ const previousPage = () => {
     <div class="profileresults__container__parent">
       <div class="block1">
         <button @click="filter = { type: 'gender', value: 'male' }">filter man</button>
+        <button @click="filter = { type: 'gender', value: 'female' }">filter woman</button>
       </div>
       <div v-if="filteredData.length < 11" class="block2">
         <CardsSection v-for="element in filteredData" :key="element.phone"
