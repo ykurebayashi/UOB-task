@@ -54,7 +54,7 @@ const consoleURL = () => {
       </div>
     </div>
   </div>
-  <button @click="consoleURL">checkURL</button>
+  <button @click="consoleURL">checkurl</button>
 </template>
 
 <style scoped>
