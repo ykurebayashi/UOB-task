@@ -37,14 +37,8 @@ const filteredData = computed(() => {
 });
 
 const nextPage = () => {
-  console.log('entrou')
-  console.log(filteredData.value.length)
   const upperLimit = Math.floor(filteredData.value.length / 10);
-  console.log(upperLimit)
-  console.log(page.value)
-
   if (page.value >= upperLimit - 1) return console.log('foi erraddo');
-  console.log('saiu')
   return page.value++;
 }
 
