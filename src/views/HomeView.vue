@@ -17,6 +17,7 @@ const props = defineProps({
 // Create two objects with intial value [] and ''
 const data = ref([]);
 const search = ref('');
+const page = ref(0);
 const url = toRef(props, 'url');
 const showSearch = toRef(props, 'showSearch');
 
@@ -47,14 +48,22 @@ const filteredData = computed(() => {
   <!--Here I have the cards-->
   <div class="profileresults__container">
     <div class="profileresults__container__parent">
-      <div class="block2">
+      <div v-if="filteredData.length < 11" class="block2">
         <CardsSection v-for="element in filteredData" :key="element.phone"
+          :name="element.name.first + ' ' + element.name.last" :treatment="element.name.title"
+          :location="element.location.city + '/' + element.location.country" :image="element.picture.large"
+          :phone="element.cell" :email="element.email" />
+      </div>
+      <div class="block2" v-else>
+        <CardsSection v-for="element in filteredData.slice(10 * page, 10 + (10 * page))" :key="element.phone"
           :name="element.name.first + ' ' + element.name.last" :treatment="element.name.title"
           :location="element.location.city + '/' + element.location.country" :image="element.picture.large"
           :phone="element.cell" :email="element.email" />
       </div>
     </div>
   </div>
+  <button @click="page--">Back</button>
+  <button @click="page++">next</button>
 </template>
 
 <style scoped>
