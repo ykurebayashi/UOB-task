@@ -1,19 +1,32 @@
 <script setup>
-import NavigationBar from '../components/Navigationbar/NavigationBar.vue';
 import SearchBar from '../components/Searchbar/SearchBar.vue';
 import CardsSection from '../components/CardsSection/CardsSection.vue';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, toRef, onUpdated } from 'vue';
+
+const props = defineProps({
+  url: {
+    type: String,
+    required: true
+  }
+});
 
 // Create two objects with intial value [] and ''
 const data = ref([]);
 const search = ref('');
+const url = toRef(props, 'url');
 
 // Here I reassign the value to the data with the return from the API
 onMounted(async () => {
-  const response = await fetch('https://randomuser.me/api/?seed=bristol&results=20');
+  const response = await fetch(url.value);
   const prematureData = await response.json();
   data.value = prematureData.results;
 });
+
+onUpdated(async () => {
+  const response = await fetch(url.value);
+  const prematureData = await response.json();
+  data.value = prematureData.results;
+})
 
 // Creates a variable, filteredData that is just the data that we got from the call without changing the original values (so we can reuse them without the need to re-fetch)
 const filteredData = computed(() => {
@@ -21,15 +34,16 @@ const filteredData = computed(() => {
     return element.name.first.toLocaleLowerCase().includes(search.value.toLocaleLowerCase());
   });
 });
+
+const consoleURL = () => {
+  console.log(url.value)
+}
 </script>
 
 <template>
-  <!--Here I have a navigation bar, just visual purpose-->
-  <NavigationBar />
   <!--Here I have a searchbar that receives as props the value of the object search-->
   <SearchBar :search="search" @update:search="search = $event" />
-  <!--Here I have the profileResults that is the component responsible for rendering the cards with the filtered data-->
-
+  <!--Here I have the cards-->
   <div class="profileresults__container">
     <div class="profileresults__container__parent">
       <div class="block2">
@@ -40,6 +54,7 @@ const filteredData = computed(() => {
       </div>
     </div>
   </div>
+  <button @click="consoleURL">checkURL</button>
 </template>
 
 <style scoped>
