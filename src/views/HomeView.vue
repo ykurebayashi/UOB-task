@@ -7,6 +7,10 @@ const props = defineProps({
   url: {
     type: String,
     required: true
+  },
+  showSearch: {
+    type: Boolean,
+    required: true,
   }
 });
 
@@ -14,6 +18,7 @@ const props = defineProps({
 const data = ref([]);
 const search = ref('');
 const url = toRef(props, 'url');
+const showSearch = toRef(props, 'showSearch');
 
 // Here I reassign the value to the data with the return from the API
 onMounted(async () => {
@@ -34,15 +39,11 @@ const filteredData = computed(() => {
     return element.name.first.toLocaleLowerCase().includes(search.value.toLocaleLowerCase());
   });
 });
-
-const consoleURL = () => {
-  console.log(url.value)
-}
 </script>
 
 <template>
   <!--Here I have a searchbar that receives as props the value of the object search-->
-  <SearchBar :search="search" @update:search="search = $event" />
+  <SearchBar v-if="showSearch" :search="search" @update:search="search = $event" />
   <!--Here I have the cards-->
   <div class="profileresults__container">
     <div class="profileresults__container__parent">
@@ -54,7 +55,6 @@ const consoleURL = () => {
       </div>
     </div>
   </div>
-  <button @click="consoleURL">checkurl</button>
 </template>
 
 <style scoped>
