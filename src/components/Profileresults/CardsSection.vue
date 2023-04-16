@@ -1,9 +1,12 @@
 <script setup>
 // eslint-disable-next-line vue/no-setup-props-destructure
-const { image, name, occupation } = defineProps([
-    'image',
+const { name, image, location, phone, email, treatment } = defineProps([
     'name',
-    'occupation'
+    'image',
+    'location',
+    'phone',
+    'email',
+    'treatment'
 ])
 </script>
 <template>
@@ -11,11 +14,12 @@ const { image, name, occupation } = defineProps([
         <img class="card__img__profile" :alt="name" :src="image" />
         <div class="card__infos">
             <div class="card__infos__personal">
-                <h1 class="card__info__name">{{ name }}</h1>
-                <h3 class="card__info__job">{{ occupation }}</h3>
+                <h2 class="card__info__name">{{ treatment }}</h2>
+                <h2 class="card__info__name">{{ name }}</h2>
+                <h3 class="card__info__job">{{ location }}</h3>
             </div>
             <div class="card__info__buttons">
-                <a class="card__info_buttons__phone">
+                <a class="card__info_buttons__phone" :href="phone">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"
                         width="20" height="20">
                         <path
@@ -24,7 +28,7 @@ const { image, name, occupation } = defineProps([
                         </path>
                     </svg>
                 </a>
-                <a class="card__info_buttons__mail">
+                <a class="card__info_buttons__mail" :href="email">
                     <svg id="my-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         viewBox="0 0 24 24" width="20" height="20">
                         <path
@@ -39,7 +43,7 @@ const { image, name, occupation } = defineProps([
 
 <style scopde>
 .card {
-    width: 190px;
+    width: 210px;
     height: 165px;
     background-color: white;
     border-radius: 10px;
@@ -49,8 +53,8 @@ const { image, name, occupation } = defineProps([
     align-items: center;
     justify-content: center;
     position: relative;
-    margin: 50px 10px;
 }
+
 
 .card__img__profile {
     width: 90px;
@@ -76,11 +80,12 @@ const { image, name, occupation } = defineProps([
 }
 
 .card__info__name {
-    font-size: 25px;
+    font-size: 18px;
     margin: 0;
     padding: 0;
     color: rgb(191, 46, 61);
     font-weight: 600;
+    text-align: center;
 }
 
 .card__info__job {

@@ -10,15 +10,16 @@ const props = defineProps({
 });
 
 const { data } = toRefs(props);
+console.log(data)
 </script>
 
 <template>
     <div class="profileresults__container">
         <div class="profileresults__container__parent">
-            <div class="block1">this is block 1</div>
             <div class="block2">
-                <CardsSection v-for="dats in data" :key="dats.phone" :name="dats.gender" :occupation="dats.gender"
-                    :image="dats.gender" />
+                <CardsSection v-for="dats in data" :key="dats.phone" :name="dats.name.first + ' ' + dats.name.last"
+                    :treatment="dats.name.title" :location="dats.location.city + '/' + dats.location.country"
+                    :image="dats.picture.large" :phone="dats.cell" :email="dats.email" />
             </div>
         </div>
     </div>
@@ -32,6 +33,8 @@ const { data } = toRefs(props);
 
 .profileresults__container__parent {
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .block1 {

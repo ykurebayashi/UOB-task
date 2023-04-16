@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, watch, ref, defineEmits } from 'vue';
+import { watch, ref, defineEmits } from 'vue';
 const emit = defineEmits(['update:search'])
 
 const props = defineProps({
@@ -12,7 +12,6 @@ const props = defineProps({
 const localSearch = ref(props.search);
 
 watch(localSearch, (newValue) => {
-    // emit a custom event to update the parent component's search value
     emit('update:search', newValue);
 });
 </script>
@@ -20,7 +19,7 @@ watch(localSearch, (newValue) => {
 <template>
     <div class="searchbar__upper">
         <div class="searchbar">
-            <p class="searchbar__title">Search by name or position</p>
+            <p class="searchbar__title">Search by name</p>
             <input v-model="localSearch" class="searchbar__input" type="text" />
         </div>
     </div>
