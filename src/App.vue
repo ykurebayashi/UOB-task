@@ -3,7 +3,7 @@ import NavigationBar from './components/Navigationbar/NavigationBar.vue';
 import HomeView from './views/HomeView.vue';
 import { ref } from 'vue';
 
-const url = ref(`https://randomuser.me/api/?seed=bristol&results=100`)
+const url = ref(`https://randomuser.me/api/?seed=bristol&results=20`)
 </script>
 
 <template>

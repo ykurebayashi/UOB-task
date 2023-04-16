@@ -15,30 +15,43 @@ const props = defineProps({
   }
 });
 
-// Create two objects with intial value [] and ''
 const data = ref([]);
 const search = ref('');
 const page = ref(0);
+const filter = ref();
 const url = toRef(props, 'url');
 const showSearch = toRef(props, 'showSearch');
 
-// Here I reassign the value to the data with the return from the API
 onMounted(async () => {
   const response = await fetch(url.value);
   const prematureData = await response.json();
   data.value = prematureData.results;
 });
 
-// Creates a variable, filteredData that is just the data that we got from the call without changing the original values (so we can reuse them without the need to re-fetch)
-const filteredData = computed(() => {
-  return data.value.filter((element) => {
+function applyFilter(data, filter) {
+  let tempData = data.filter((element) => {
     return element.name.first.toLocaleLowerCase().includes(search.value.toLocaleLowerCase());
   });
+
+  if (!filter) {
+    return tempData;
+  }
+
+  switch (filter.type) {
+    case 'gender':
+      return tempData.filter((element) => element.gender === filter.value);
+    default:
+      return data;
+  }
+}
+
+const filteredData = computed(() => {
+  return applyFilter(data.value, filter.value);
 });
 
 const nextPage = () => {
   const upperLimit = Math.floor(filteredData.value.length / 10);
-  if (page.value >= upperLimit - 1) return console.log('foi erraddo');
+  if (page.value >= upperLimit - 1) return;
   return page.value++;
 }
 
@@ -51,9 +64,14 @@ const previousPage = () => {
 <template>
   <!--Here I have a searchbar that receives as props the value of the object search-->
   <SearchBar v-if="showSearch" :search="search" @update:search="search = $event" />
+
+
   <!--Here I have the cards-->
   <div class="profileresults__container">
     <div class="profileresults__container__parent">
+      <div class="block1">
+        <button @click="filter = { type: 'gender', value: 'male' }">filter man</button>
+      </div>
       <div v-if="filteredData.length < 11" class="block2">
         <CardsSection v-for="element in filteredData" :key="element.phone"
           :name="element.name.first + ' ' + element.name.last" :treatment="element.name.title"
@@ -68,6 +86,8 @@ const previousPage = () => {
       </div>
     </div>
   </div>
+
+  <!--Here I have the next and previous page buttons-->
   <ButtonComponent @click="previousPage" title="Previous Page" />
   <ButtonComponent @click="nextPage" title="Next Page" />
 </template>
