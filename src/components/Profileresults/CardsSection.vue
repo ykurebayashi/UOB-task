@@ -1,14 +1,35 @@
 <script setup>
-// eslint-disable-next-line vue/no-setup-props-destructure
-const { name, image, location, phone, email, treatment } = defineProps([
-    'name',
-    'image',
-    'location',
-    'phone',
-    'email',
-    'treatment'
-])
+import { toRefs } from 'vue';
+const props = defineProps({
+    name: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    },
+    location: {
+        type: String,
+        required: false
+    },
+    phone: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    treatment: {
+        type: String,
+        required: true
+    },
+})
+
+const { name, image, location, phone, email, treatment } = toRefs(props);
 </script>
+
 <template>
     <div class="card">
         <img class="card__img__profile" :alt="name" :src="image" />
@@ -53,8 +74,8 @@ const { name, image, location, phone, email, treatment } = defineProps([
     align-items: center;
     justify-content: center;
     position: relative;
+    margin: 50px 25px;
 }
-
 
 .card__img__profile {
     width: 90px;

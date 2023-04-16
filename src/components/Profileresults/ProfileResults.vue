@@ -10,7 +10,6 @@ const props = defineProps({
 });
 
 const { data } = toRefs(props);
-console.log(data)
 </script>
 
 <template>
@@ -45,8 +44,9 @@ console.log(data)
 .block2 {
     margin-top: 50px;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     width: 100%;
-    margin-left: 40px;
 }
 </style>

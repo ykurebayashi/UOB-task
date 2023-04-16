@@ -1,7 +1,7 @@
 <script setup>
 import NavigationBar from '../components/Navigationbar/NavigationBar.vue';
-import ProfileResults from '../components/Profileresults/ProfileResults.vue';
 import SearchBar from '../components/Searchbar/SearchBar.vue';
+import ProfileResults from '../components/Profileresults/ProfileResults.vue';
 import { ref, computed, onMounted } from 'vue';
 
 // Create two objects with intial value [] and ''

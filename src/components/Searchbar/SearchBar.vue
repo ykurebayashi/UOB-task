@@ -2,6 +2,7 @@
 import { watch, ref, defineEmits } from 'vue';
 const emit = defineEmits(['update:search'])
 
+// Getting the props search
 const props = defineProps({
     search: {
         type: String,
