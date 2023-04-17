@@ -21,10 +21,11 @@ watch(localSearch, (newValue) => {
     <div class="searchbar1">
         <div class="searchbar__container">
             <p class="searchbar__container-title">Search by name</p>
-            <input v-model="localSearch" class="searchbar__container-input" type="text" />
+            <input v-model="localSearch" class="searchbar__container-input" type="text" aria-label="Search input" />
         </div>
     </div>
 </template>
+  
 
 <style lang="scss" scoped>
 @import '../../assets/style.scss';

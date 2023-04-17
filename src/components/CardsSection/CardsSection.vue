@@ -32,15 +32,15 @@ const { name, image, location, phone, email, treatment } = toRefs(props);
 
 <template>
     <div class="card">
-        <img class="card__img" :alt="name" :src="image" />
+        <img class="card__img" :alt="'Image of' + name" :src="image" />
         <div class="card__infos">
             <div class="card__infos-personal">
-                <h2 class="card__info-personal__name">{{ treatment }}</h2>
-                <h2 class="card__info-personal__name">{{ name }}</h2>
-                <h3 class="card__info-personal__job">{{ location }}</h3>
+                <h2 class="card__info-personal__name" aria-label="Treatment">{{ treatment }}</h2>
+                <h2 class="card__info-personal__name" aria-label="Name">{{ name }}</h2>
+                <h3 class="card__info-personal__job" aria-label="Location">{{ location }}</h3>
             </div>
             <div class="card__info-buttons">
-                <a class="card__info-buttons__phone" :href="phone">
+                <a class="card__info-buttons__phone" :href="'tel:' + phone" aria-label="Call icon">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"
                         width="20" height="20">
                         <path
@@ -49,7 +49,7 @@ const { name, image, location, phone, email, treatment } = toRefs(props);
                         </path>
                     </svg>
                 </a>
-                <a class="card__info-buttons__mail" :href="email">
+                <a class="card__info-buttons__mail" :href="'mailto:' + email" aria-label="Email icon">
                     <svg id="my-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         viewBox="0 0 24 24" width="20" height="20">
                         <path

@@ -44,7 +44,6 @@ const previousPage = async () => {
 // Make debounce example with search
 const debouncedSearch = ref('');
 const debounceTime = 500;
-
 watch(search, (newVal) => {
   if (newVal !== '') {
     setTimeout(() => {
