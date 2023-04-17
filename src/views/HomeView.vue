@@ -2,7 +2,7 @@
 import SearchBar from '../components/Searchbar/SearchBar.vue';
 import CardsSection from '../components/CardsSection/CardsSection.vue';
 import ButtonComponent from '../components/Button/ButtonComponent.vue'
-import { ref, computed, onMounted, toRefs } from 'vue';
+import { ref, onMounted, toRefs, watch } from 'vue';
 
 const props = defineProps({
   url: {
@@ -18,91 +18,84 @@ const props = defineProps({
 const data = ref([]);
 const search = ref('');
 const page = ref(0);
-const filter = ref();
 const { url, showSearch } = toRefs(props);
 
-
-onMounted(async () => {
-  const response = await fetch(url.value);
+const fetchData = async (param) => {
+  const response = await fetch(`${url.value}${param}`);
   const prematureData = await response.json();
   data.value = prematureData.results;
-});
-
-function applyFilter(data, filter) {
-  page.value = 0;
-  let tempData = data.filter((element) => {
-    return element.name.first.toLocaleLowerCase().includes(search.value.toLocaleLowerCase());
-  });
-
-  if (!filter) {
-    return tempData;
-  }
-
-  switch (filter.type) {
-    case 'gender':
-      return tempData.filter((element) => element.gender === filter.value);
-    default:
-      return data;
-  }
 }
 
-const filteredData = computed(() => {
-  return applyFilter(data.value, filter.value);
+onMounted(async () => {
+  fetchData(`&page=1`);
 });
 
-const nextPage = () => {
-  if (12 * (page.value + 1) >= filteredData.value.length) return;
-  return page.value++;
+const nextPage = async () => {
+  page.value++;
+  fetchData(`&page=${page.value + 1}`)
 }
 
-const previousPage = () => {
+const previousPage = async () => {
   if (page.value <= 0) return;
-  return page.value--;
+  page.value--;
+  fetchData(`&page=${page.value + 1}`)
 }
+
+// Make debounce example with search
+const debouncedSearch = ref('');
+const debounceTime = 500;
+
+watch(search, (newVal) => {
+  if (newVal !== '') {
+    setTimeout(() => {
+      if (newVal === search.value) {
+        // Here i'd make an API request with the value on the filter
+        data.value = data.value.filter((element) => {
+          return element.name.first.toLocaleLowerCase().includes(search.value.toLocaleLowerCase());
+        });
+        debouncedSearch.value = newVal;
+      }
+    }, debounceTime);
+  } else {
+    setTimeout(() => {
+      if (newVal === search.value) {
+        fetchData(`&page=${page.value + 1}`)
+        debouncedSearch.value = newVal;
+      }
+    }, debounceTime);
+  }
+});
+
 </script>
 
 <template>
-  <!--Here I have a searchbar that receives as props the value of the object search-->
-  <SearchBar v-if="showSearch" :search="search" @update:search="search = $event" />
+  <div role="main" aria-label="Search Results">
+    <SearchBar v-if="showSearch" :search="search" @update:search="search = $event" aria-label="Search Bar" />
 
-  <!--Here I have the cards-->
-  <div class="profileresults__container">
-    <div class="profileresults__container-filter">
-      <button @click="filter = { type: 'gender', value: 'male' }">filter man</button>
-      <button @click="filter = { type: 'gender', value: 'female' }">filter woman</button>
+    <div class="profileresults__container">
+      <div class="profileresults__container-cards" role="list">
+        <CardsSection v-for="element in data" :key="element.phone" :name="element.name.first + ' ' + element.name.last"
+          :treatment="element.name.title" :location="element.location.city + '/' + element.location.country"
+          :image="element.picture.large" :phone="element.cell" :email="element.email" role="listitem" />
+      </div>
     </div>
-    <div class="profileresults__container-cards" v-if="filteredData.length < 11">
-      <CardsSection v-for="element in filteredData" :key="element.phone"
-        :name="element.name.first + ' ' + element.name.last" :treatment="element.name.title"
-        :location="element.location.city + '/' + element.location.country" :image="element.picture.large"
-        :phone="element.cell" :email="element.email" />
-    </div>
-    <div class="profileresults__container-cards" v-else>
-      <CardsSection v-for="element in filteredData.slice(12 * page, 12 + (12 * page))" :key="element.phone"
-        :name="element.name.first + ' ' + element.name.last" :treatment="element.name.title"
-        :location="element.location.city + '/' + element.location.country" :image="element.picture.large"
-        :phone="element.cell" :email="element.email" />
-    </div>
-  </div>
 
-  <!--Here I have the next and previous page buttons-->
-  <div class="profileresults__container-pagination">
-    <ButtonComponent @click="previousPage" title="Previous Page" />
-    <ButtonComponent @click="nextPage" title="Next Page" />
+    <div class="profileresults__container-pagination" role="navigation" aria-label="Pagination">
+      <ButtonComponent @click="previousPage" title="Previous Page" aria-label="Previous Page" />
+      <ButtonComponent @click="nextPage" title="Next Page" aria-label="Next Page" />
+    </div>
   </div>
 </template>
 
-<style scoped>
+
+<style lang="scss" scoped>
+@import '../assets/style.scss';
+
 .profileresults__container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding: 0 4rem;
-}
-
-.profileresults__container-filter {
-  margin-top: 50px;
-  min-width: 300px;
 }
 
 .profileresults__container-cards {
