@@ -12,15 +12,15 @@ const { title } = defineProps({
     <button>{{ title }}</button>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../assets/style.scss';
+
 button {
     background: none;
     border: none;
     padding: 0;
-    font-family: arial, sans-serif;
-    text-decoration: underline;
     cursor: pointer;
-    color: rgb(191, 46, 61);
+    color: $red;
     margin: 0 10px;
 }
 </style>

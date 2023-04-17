@@ -32,15 +32,15 @@ const { name, image, location, phone, email, treatment } = toRefs(props);
 
 <template>
     <div class="card">
-        <img class="card__img__profile" :alt="name" :src="image" />
+        <img class="card__img" :alt="name" :src="image" />
         <div class="card__infos">
-            <div class="card__infos__personal">
-                <h2 class="card__info__name">{{ treatment }}</h2>
-                <h2 class="card__info__name">{{ name }}</h2>
-                <h3 class="card__info__job">{{ location }}</h3>
+            <div class="card__infos-personal">
+                <h2 class="card__info-personal__name">{{ treatment }}</h2>
+                <h2 class="card__info-personal__name">{{ name }}</h2>
+                <h3 class="card__info-personal__job">{{ location }}</h3>
             </div>
-            <div class="card__info__buttons">
-                <a class="card__info_buttons__phone" :href="phone">
+            <div class="card__info-buttons">
+                <a class="card__info-buttons__phone" :href="phone">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"
                         width="20" height="20">
                         <path
@@ -49,7 +49,7 @@ const { name, image, location, phone, email, treatment } = toRefs(props);
                         </path>
                     </svg>
                 </a>
-                <a class="card__info_buttons__mail" :href="email">
+                <a class="card__info-buttons__mail" :href="email">
                     <svg id="my-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         viewBox="0 0 24 24" width="20" height="20">
                         <path
@@ -62,22 +62,21 @@ const { name, image, location, phone, email, treatment } = toRefs(props);
     </div>
 </template>
 
-<style scopde>
+<style lang="scss" scopde>
+@import '../../assets/style.scss';
+
 .card {
+    @include verticalCenter;
     width: 210px;
     height: 165px;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0px 0px 50px 20px rgba(53, 53, 53, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    box-shadow: $boxShadow;
     position: relative;
     margin: 50px 25px;
 }
 
-.card__img__profile {
+.card__img {
     width: 90px;
     border-radius: 50%;
     position: absolute;
@@ -87,37 +86,29 @@ const { name, image, location, phone, email, treatment } = toRefs(props);
 }
 
 .card__infos,
-.card__infos__personal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.card__infos-personal {
+    @include verticalCenter;
 }
 
 .card__infos {
     height: 90px;
-    justify-content: space-around;
     margin-top: 40px;
 }
 
-.card__info__name {
-    font-size: 18px;
-    margin: 0;
-    padding: 0;
-    color: rgb(191, 46, 61);
+.card__info-personal__name {
+    font-size: $fontSizeBig;
+    color: $red;
     font-weight: 600;
     text-align: center;
 }
 
-.card__info__job {
-    font-size: 12px;
-    margin: 0;
-    padding: 0;
-    color: black;
+.card__info-personal__job {
+    font-size: $fontSizeMedium;
+    color: $black;
     font-weight: 300;
 }
 
-.card__info__buttons {
+.card__info-buttons {
     width: 100px;
     height: 30px;
     display: flex;
@@ -126,8 +117,8 @@ const { name, image, location, phone, email, treatment } = toRefs(props);
     margin-top: 10px;
 }
 
-.card__info_buttons__mail,
-.card__info_buttons__phone {
+.card__info-buttons__mail,
+.card__info-buttons__phone {
     width: 40px;
     height: 40px;
     background-color: white;
@@ -135,17 +126,17 @@ const { name, image, location, phone, email, treatment } = toRefs(props);
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgb(238, 238, 238);
+    border: 1px solid $lightGrey;
 }
 
-.card__info_buttons__mail:hover,
-.card__info_buttons__phone:hover {
-    background-color: red;
+.card__info-buttons__mail:hover,
+.card__info-buttons__phone:hover {
+    background-color: $red;
     border: none;
 }
 
-.card__info_buttons__mail:hover path,
-.card__info_buttons__phone:hover path {
+.card__info-buttons__mail:hover path,
+.card__info-buttons__phone:hover path {
     fill: white;
 }
 </style>

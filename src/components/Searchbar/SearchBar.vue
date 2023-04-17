@@ -18,38 +18,38 @@ watch(localSearch, (newValue) => {
 </script>
 
 <template>
-    <div class="searchbar__upper">
-        <div class="searchbar">
-            <p class="searchbar__title">Search by name</p>
-            <input v-model="localSearch" class="searchbar__input" type="text" />
+    <div class="searchbar1">
+        <div class="searchbar__container">
+            <p class="searchbar__container-title">Search by name</p>
+            <input v-model="localSearch" class="searchbar__container-input" type="text" />
         </div>
     </div>
 </template>
 
-<style scoped>
-.searchbar__upper {
+<style lang="scss" scoped>
+@import '../../assets/style.scss';
+
+.searchbar1 {
     padding: 0 4rem;
 }
 
-.searchbar {
-    display: flex;
-    flex-direction: column;
+.searchbar__container {
+    @include verticalCenter;
     align-items: flex-start;
-    justify-content: center;
     height: 165px;
     margin: 0 auto;
     max-width: 1310px;
     width: 100%;
-    background-color: #e5e6e5;
+    background-color: $middleGrey;
     padding: 20px;
     margin-top: 50px;
 }
 
-.searchbar__title {
+.searchbar__container-title {
     margin-bottom: 10px;
 }
 
-.searchbar__input {
+.searchbar__container-input {
     height: 50%;
     width: 95%;
     border: none;

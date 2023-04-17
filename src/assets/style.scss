@@ -1,0 +1,24 @@
+$red:  rgb(191, 46, 61);
+$black: #161b20; 
+$lightGrey: rgb(238, 238, 238) ;
+$middleGrey: #e5e6e5;
+$darkGrey: #45494d;
+
+$boxShadow: 0px 0px 50px 20px rgba(53, 53, 53, 0.1);
+
+
+$fontSizeSmall: 10px;
+$fontSizeMedium: 12px;
+$fontSizeBig: 18px;
+
+@mixin verticalCenter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+@mixin horizontalCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
