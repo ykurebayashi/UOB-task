@@ -2,7 +2,7 @@
 import SearchBar from '../components/Searchbar/SearchBar.vue';
 import CardsSection from '../components/CardsSection/CardsSection.vue';
 import ButtonComponent from '../components/Button/ButtonComponent.vue'
-import { ref, computed, onMounted, toRefs } from 'vue';
+import { ref, computed, onMounted, toRefs, watch } from 'vue';
 
 const props = defineProps({
   url: {
@@ -27,6 +27,12 @@ onMounted(async () => {
   const prematureData = await response.json();
   data.value = prematureData.results;
 });
+
+watch(url, async () => {
+  const response = await fetch(url.value);
+  const prematureData = await response.json();
+  data.value = prematureData.results;
+})
 
 function applyFilter(data, filter) {
   page.value = 0;
