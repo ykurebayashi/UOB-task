@@ -51,10 +51,7 @@ const filteredData = computed(() => {
 });
 
 const nextPage = () => {
-  if (12 * page.value >= filteredData.value.length) {
-    console.log('caiu no except')
-    return
-  };
+  if (12 * (page.value + 1) >= filteredData.value.length) return;
   return page.value++;
 }
 
@@ -71,23 +68,21 @@ const previousPage = () => {
 
   <!--Here I have the cards-->
   <div class="profileresults__container">
-    <div class="profileresults__container__parent">
-      <div class="block1">
-        <button @click="filter = { type: 'gender', value: 'male' }">filter man</button>
-        <button @click="filter = { type: 'gender', value: 'female' }">filter woman</button>
-      </div>
-      <div v-if="filteredData.length < 11" class="block2">
-        <CardsSection v-for="element in filteredData" :key="element.phone"
-          :name="element.name.first + ' ' + element.name.last" :treatment="element.name.title"
-          :location="element.location.city + '/' + element.location.country" :image="element.picture.large"
-          :phone="element.cell" :email="element.email" />
-      </div>
-      <div class="block2" v-else>
-        <CardsSection v-for="element in filteredData.slice(12 * page, 12 + (12 * page))" :key="element.phone"
-          :name="element.name.first + ' ' + element.name.last" :treatment="element.name.title"
-          :location="element.location.city + '/' + element.location.country" :image="element.picture.large"
-          :phone="element.cell" :email="element.email" />
-      </div>
+    <div class="block1">
+      <button @click="filter = { type: 'gender', value: 'male' }">filter man</button>
+      <button @click="filter = { type: 'gender', value: 'female' }">filter woman</button>
+    </div>
+    <div v-if="filteredData.length < 11" class="block2">
+      <CardsSection v-for="element in filteredData" :key="element.phone"
+        :name="element.name.first + ' ' + element.name.last" :treatment="element.name.title"
+        :location="element.location.city + '/' + element.location.country" :image="element.picture.large"
+        :phone="element.cell" :email="element.email" />
+    </div>
+    <div class="block2" v-else>
+      <CardsSection v-for="element in filteredData.slice(12 * page, 12 + (12 * page))" :key="element.phone"
+        :name="element.name.first + ' ' + element.name.last" :treatment="element.name.title"
+        :location="element.location.city + '/' + element.location.country" :image="element.picture.large"
+        :phone="element.cell" :email="element.email" />
     </div>
   </div>
 
@@ -98,13 +93,10 @@ const previousPage = () => {
 
 <style scoped>
 .profileresults__container {
-  padding: 0 4rem;
-}
-
-.profileresults__container__parent {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding: 0 4rem;
 }
 
 .block1 {
@@ -115,7 +107,7 @@ const previousPage = () => {
 .block2 {
   margin-top: 50px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
