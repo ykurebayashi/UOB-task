@@ -1,5 +1,5 @@
 <script setup>
-import { watch, ref, defineEmits } from 'vue';
+import { watch, ref } from 'vue';
 const emit = defineEmits(['update:search'])
 
 // Getting the props search

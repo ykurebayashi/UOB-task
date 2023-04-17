@@ -65,20 +65,19 @@ const previousPage = () => {
   <!--Here I have a searchbar that receives as props the value of the object search-->
   <SearchBar v-if="showSearch" :search="search" @update:search="search = $event" />
 
-
   <!--Here I have the cards-->
   <div class="profileresults__container">
-    <div class="block1">
+    <div class="profileresults__container-filter">
       <button @click="filter = { type: 'gender', value: 'male' }">filter man</button>
       <button @click="filter = { type: 'gender', value: 'female' }">filter woman</button>
     </div>
-    <div v-if="filteredData.length < 11" class="block2">
+    <div class="profileresults__container-cards" v-if="filteredData.length < 11">
       <CardsSection v-for="element in filteredData" :key="element.phone"
         :name="element.name.first + ' ' + element.name.last" :treatment="element.name.title"
         :location="element.location.city + '/' + element.location.country" :image="element.picture.large"
         :phone="element.cell" :email="element.email" />
     </div>
-    <div class="block2" v-else>
+    <div class="profileresults__container-cards" v-else>
       <CardsSection v-for="element in filteredData.slice(12 * page, 12 + (12 * page))" :key="element.phone"
         :name="element.name.first + ' ' + element.name.last" :treatment="element.name.title"
         :location="element.location.city + '/' + element.location.country" :image="element.picture.large"
@@ -87,8 +86,10 @@ const previousPage = () => {
   </div>
 
   <!--Here I have the next and previous page buttons-->
-  <ButtonComponent @click="previousPage" title="Previous Page" />
-  <ButtonComponent @click="nextPage" title="Next Page" />
+  <div class="profileresults__container-pagination">
+    <ButtonComponent @click="previousPage" title="Previous Page" />
+    <ButtonComponent @click="nextPage" title="Next Page" />
+  </div>
 </template>
 
 <style scoped>
@@ -99,17 +100,24 @@ const previousPage = () => {
   padding: 0 4rem;
 }
 
-.block1 {
-
+.profileresults__container-filter {
+  margin-top: 50px;
   min-width: 300px;
 }
 
-.block2 {
+.profileresults__container-cards {
   margin-top: 50px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
+}
+
+.profileresults__container-pagination {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0 4rem;
 }
 </style>
