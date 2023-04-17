@@ -51,8 +51,10 @@ const filteredData = computed(() => {
 });
 
 const nextPage = () => {
-  const upperLimit = Math.floor(filteredData.value.length / 10);
-  if (page.value >= upperLimit - 1) return;
+  if (12 * page.value >= filteredData.value.length) {
+    console.log('caiu no except')
+    return
+  };
   return page.value++;
 }
 
@@ -81,7 +83,7 @@ const previousPage = () => {
           :phone="element.cell" :email="element.email" />
       </div>
       <div class="block2" v-else>
-        <CardsSection v-for="element in filteredData.slice(10 * page, 10 + (10 * page))" :key="element.phone"
+        <CardsSection v-for="element in filteredData.slice(12 * page, 12 + (12 * page))" :key="element.phone"
           :name="element.name.first + ' ' + element.name.last" :treatment="element.name.title"
           :location="element.location.city + '/' + element.location.country" :image="element.picture.large"
           :phone="element.cell" :email="element.email" />
