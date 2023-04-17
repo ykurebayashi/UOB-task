@@ -104,12 +104,15 @@ watch(search, (newVal) => {
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
+  max-width: 1350px;
 }
 
 .profileresults__container-pagination {
   display: flex;
   justify-content: flex-end;
   width: 100%;
+  max-width: 1350px;
   padding: 0 4rem;
+  margin: auto;
 }
 </style>
