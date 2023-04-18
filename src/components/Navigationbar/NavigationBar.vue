@@ -19,6 +19,13 @@
                 <li class="header__nav-item">People</li>
             </ul>
         </div>
+        <div class="header__nav-burger">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50px"
+                height="50px" viewBox="0 0 100 100">
+                <path stroke-width="24" stroke-linecap="round" stroke="#fff" d="M15 20L85 20M15 50L85 50M15 80L85 80" />
+            </svg>
+
+        </div>
         <div class="header__banner-bottom">
             <img class="header__banner-bottom__logo" src="src/assets/University_of_Bristol_logo.png" />
             <h2 class="header__banner-bottom__text">Our people</h2>
@@ -76,6 +83,10 @@
     }
 }
 
+.header__nav-burger {
+    display: none
+}
+
 .header__banner-bottom {
     display: flex;
     align-items: center;
@@ -92,6 +103,22 @@
 
     .header__banner-bottom__text {
         flex-grow: 1;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .header__nav-top {
+        display: none;
+    }
+
+    .header__nav-burger {
+        display: block;
+        background-color: $black;
+        width: 100%;
+        height: 80px;
+        @include verticalCenter;
+        align-items: flex-end;
+        padding: 10px;
     }
 }
 </style>

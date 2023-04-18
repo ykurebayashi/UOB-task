@@ -55,4 +55,10 @@ watch(localSearch, (newValue) => {
     width: 95%;
     border: none;
 }
+
+@media screen and (max-width: 700px) {
+    .searchbar1 {
+        padding: 0;
+    }
+}
 </style>
