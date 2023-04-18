@@ -73,13 +73,13 @@
             border-right: 1px solid $darkGrey;
         }
 
-        .header__nav-item:hover {
-            background-color: $darkGrey;
-        }
-
         .header__nav-item__arrow {
             margin-left: 5px;
         }
+    }
+
+    .header__nav-item:hover {
+        background-color: $darkGrey;
     }
 }
 

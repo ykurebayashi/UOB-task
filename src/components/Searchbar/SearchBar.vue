@@ -54,6 +54,8 @@ watch(localSearch, (newValue) => {
     height: 50%;
     width: 95%;
     border: none;
+    padding: 10px;
+    font-size: $fontSizeBig;
 }
 
 @media screen and (max-width: 700px) {

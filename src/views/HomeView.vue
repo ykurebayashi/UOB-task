@@ -18,12 +18,15 @@ const props = defineProps({
 const data = ref([]);
 const search = ref('');
 const page = ref(0);
+const isLoading = ref(false)
 const { url, showSearch } = toRefs(props);
 
 const fetchData = async (param) => {
+  isLoading.value = true;
   const response = await fetch(`${url.value}${param}`);
   const prematureData = await response.json();
   data.value = prematureData.results;
+  isLoading.value = false;
 }
 
 onMounted(async () => {
@@ -42,7 +45,6 @@ const previousPage = async () => {
 }
 
 // Make debounce example with search
-const debouncedSearch = ref('');
 const debounceTime = 500;
 watch(search, (newVal) => {
   if (newVal !== '') {
@@ -52,14 +54,12 @@ watch(search, (newVal) => {
         data.value = data.value.filter((element) => {
           return element.name.first.toLocaleLowerCase().includes(search.value.toLocaleLowerCase());
         });
-        debouncedSearch.value = newVal;
       }
     }, debounceTime);
   } else {
     setTimeout(() => {
       if (newVal === search.value) {
         fetchData(`&page=${page.value + 1}`)
-        debouncedSearch.value = newVal;
       }
     }, debounceTime);
   }
@@ -68,20 +68,28 @@ watch(search, (newVal) => {
 </script>
 
 <template>
-  <div role="main" aria-label="Search Results">
+  <div class="wrapper" role="main" aria-label="Search Results">
     <SearchBar v-if="showSearch" :search="search" @update:search="search = $event" aria-label="Search Bar" />
 
     <div class="profileresults__container">
-      <div class="profileresults__container-cards" role="list">
+      <div v-if="data.length !== 0" class="profileresults__container-cards" role="list">
         <CardsSection v-for="element in data" :key="element.phone" :name="element.name.first + ' ' + element.name.last"
           :treatment="element.name.title" :location="element.location.city + '/' + element.location.country"
           :image="element.picture.large" :phone="element.cell" :email="element.email" role="listitem" />
       </div>
     </div>
 
-    <div class="profileresults__container-pagination" role="navigation" aria-label="Pagination">
+    <div v-if="data.length !== 0" class="profileresults__container-pagination" role="navigation" aria-label="Pagination">
       <ButtonComponent @click="previousPage" title="Previous Page" aria-label="Previous Page" />
+      <span>|</span>
       <ButtonComponent @click="nextPage" title="Next Page" aria-label="Next Page" />
+    </div>
+
+    <div v-if="data.length === 0 && !isLoading">
+      <h2 class="profileresults__notfound">No users found</h2>
+    </div>
+    <div v-if="data.length === 0 && isLoading">
+      <h2 class="profileresults__notfound">Loading...</h2>
     </div>
   </div>
 </template>
@@ -89,6 +97,10 @@ watch(search, (newVal) => {
 
 <style lang="scss" scoped>
 @import '../assets/style.scss';
+
+.wrapper {
+  margin-bottom: 80px;
+}
 
 .profileresults__container {
   display: flex;
@@ -114,5 +126,11 @@ watch(search, (newVal) => {
   max-width: 1350px;
   padding: 0 4rem;
   margin: auto;
+}
+
+.profileresults__notfound {
+  width: 100%;
+  text-align: center;
+  margin: 50px;
 }
 </style>
