@@ -4,6 +4,7 @@ import CardsSection from '../components/CardsSection/CardsSection.vue';
 import ButtonComponent from '../components/Button/ButtonComponent.vue'
 import { ref, onMounted, toRefs, watch } from 'vue';
 
+// Defining the props that are being received
 const props = defineProps({
   url: {
     type: String,
@@ -15,12 +16,14 @@ const props = defineProps({
   }
 });
 
+// Defining needed state variables
 const data = ref([]);
 const search = ref('');
 const page = ref(0);
 const isLoading = ref(false)
 const { url, showSearch } = toRefs(props);
 
+// The function responsible for fetching data. It accepts a param as the query we want to make. So it's possible to implement in the future queries by gender, name, age, position, etc.
 const fetchData = async (param) => {
   isLoading.value = true;
   const response = await fetch(`${url.value}${param}`);
@@ -29,10 +32,12 @@ const fetchData = async (param) => {
   isLoading.value = false;
 }
 
+// When the component mounts, fetch the data page 1
 onMounted(async () => {
   fetchData(`&page=1`);
 });
 
+// Next/Previous page function. Adds +1 to the current page and re-execute the fetch so it only fetchs the desired data
 const nextPage = async () => {
   page.value++;
   fetchData(`&page=${page.value + 1}`)
@@ -50,7 +55,7 @@ watch(search, (newVal) => {
   if (newVal !== '') {
     setTimeout(() => {
       if (newVal === search.value) {
-        // Here i'd make an API request with the value on the filter
+        // Here i'd make an API request with the value on the filter. If its a filter for name could be fetchData($page={pageValue}&name=searchValue).
         data.value = data.value.filter((element) => {
           return element.name.first.toLocaleLowerCase().includes(search.value.toLocaleLowerCase());
         });
@@ -59,6 +64,7 @@ watch(search, (newVal) => {
   } else {
     setTimeout(() => {
       if (newVal === search.value) {
+        // If the newVal is an empty string, just to back to the page we were.
         fetchData(`&page=${page.value + 1}`)
       }
     }, debounceTime);
