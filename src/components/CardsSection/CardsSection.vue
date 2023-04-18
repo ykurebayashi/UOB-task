@@ -35,9 +35,9 @@ const { name, image, location, phone, email, treatment } = toRefs(props);
         <img class="card__img" :alt="'Image of' + name" :src="image" />
         <div class="card__infos">
             <div class="card__infos-personal">
-                <h2 class="card__info-personal__name" aria-label="Treatment">{{ treatment }}</h2>
+                <h2 class="card__info-personal__treatment" aria-label="Treatment">{{ treatment }}</h2>
                 <h2 class="card__info-personal__name" aria-label="Name">{{ name }}</h2>
-                <h3 class="card__info-personal__job" aria-label="Location">{{ location }}</h3>
+                <h3 class="card__info-personal__location" aria-label="Location">{{ location }}</h3>
             </div>
             <div class="card__info-buttons">
                 <a class="card__info-buttons__phone" :href="'tel:' + phone" aria-label="Call icon">
@@ -102,7 +102,14 @@ const { name, image, location, phone, email, treatment } = toRefs(props);
     text-align: center;
 }
 
-.card__info-personal__job {
+.card__info-personal__treatment {
+    font-size: $fontSizeMedium;
+    color: $red;
+    font-weight: 600;
+    text-align: center;
+}
+
+.card__info-personal__location {
     font-size: $fontSizeMedium;
     color: $black;
     font-weight: 300;
