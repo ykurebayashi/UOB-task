@@ -26,9 +26,14 @@ const { url, showSearch } = toRefs(props);
 // The function responsible for fetching data. It accepts a param as the query we want to make. So it's possible to implement in the future queries by gender, name, age, position, etc.
 const fetchData = async (param) => {
   isLoading.value = true;
-  const response = await fetch(`${url.value}${param}`);
-  const prematureData = await response.json();
-  data.value = prematureData.results;
+  try {
+    const response = await fetch(`${url.value}${param}`);
+    const prematureData = await response.json();
+    data.value = prematureData.results;
+  } catch (e) {
+    // Here could existe a function to throw error to sentry or another app monitoring system
+    console.log(e)
+  }
   isLoading.value = false;
 }
 
