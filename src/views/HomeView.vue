@@ -71,26 +71,26 @@ watch(search, (newVal) => {
   <div class="wrapper" role="main" aria-label="Search Results">
     <SearchBar v-if="showSearch" :search="search" @update:search="search = $event" aria-label="Search Bar" />
 
-    <div class="profileresults__container">
-      <div v-if="data.length !== 0" class="profileresults__container-cards" role="list">
+    <div v-if="data.length !== 0" class="profileresults__container">
+      <div class="profileresults__container-cards" role="list">
         <CardsSection v-for="element in data" :key="element.phone" :name="element.name.first + ' ' + element.name.last"
           :treatment="element.name.title" :location="element.location.city + '/' + element.location.country"
           :image="element.picture.large" :phone="element.cell" :email="element.email" role="listitem" />
       </div>
     </div>
 
-    <div v-if="data.length !== 0" class="profileresults__container-pagination" role="navigation" aria-label="Pagination">
+    <div class="profileresults__container-pagination" role="navigation" aria-label="Pagination">
       <ButtonComponent @click="previousPage" title="Previous Page" aria-label="Previous Page" />
       <span>|</span>
       <ButtonComponent @click="nextPage" title="Next Page" aria-label="Next Page" />
     </div>
+  </div>
 
-    <div v-if="data.length === 0 && !isLoading">
-      <h2 class="profileresults__notfound">No users found</h2>
-    </div>
-    <div v-if="data.length === 0 && isLoading">
-      <h2 class="profileresults__notfound">Loading...</h2>
-    </div>
+  <div v-if="data.length === 0 && !isLoading">
+    <h2 class="profileresults__notfound">No users found</h2>
+  </div>
+  <div v-if="data.length === 0 && isLoading">
+    <h2 class="profileresults__notfound">Loading...</h2>
   </div>
 </template>
 
