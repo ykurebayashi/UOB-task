@@ -79,7 +79,7 @@ watch(search, (newVal) => {
       </div>
     </div>
 
-    <div class="profileresults__container-pagination" role="navigation" aria-label="Pagination">
+    <div v-if="data.length !== 0" class="profileresults__container-pagination" role="navigation" aria-label="Pagination">
       <ButtonComponent @click="previousPage" title="Previous Page" aria-label="Previous Page" />
       <span>|</span>
       <ButtonComponent @click="nextPage" title="Next Page" aria-label="Next Page" />
