@@ -7,6 +7,6 @@ const url = ref(`https://randomuser.me/api/?seed=bristol&results=10`)
 </script>
 
 <template>
-  <NavigationBar aria-label="Navigation Bar" />
-  <HomeView :url="url" :show-search="true" aria-label="Profile results" />
+  <NavigationBar />
+  <HomeView :url="url" :show-search="true" />
 </template>

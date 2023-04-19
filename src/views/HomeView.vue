@@ -79,18 +79,18 @@ watch(search, (newVal) => {
 </script>
 
 <template>
-  <main class="wrapper" role="main" aria-label="Search Results">
+  <main class="search" role="main" aria-label="Search Results">
     <SearchBar v-if="showSearch" :search="search" @update:search="search = $event" aria-label="Search Bar" />
 
-    <section v-if="data.length !== 0" class="profileresults__container">
-      <div class="profileresults__container-cards" role="list">
+    <section v-if="data.length !== 0" class="search__container">
+      <div class="search__container-cards" role="list">
         <CardsSection v-for="element in data" :key="element.phone" :name="element.name.first + ' ' + element.name.last"
           :treatment="element.name.title" :location="element.location.city + '/' + element.location.country"
           :image="element.picture.large" :phone="element.cell" :email="element.email" role="listitem" />
       </div>
     </section>
 
-    <nav v-if="data.length !== 0" class="profileresults__container-pagination" role="navigation" aria-label="Pagination">
+    <nav v-if="data.length !== 0" class="search__pagination" role="navigation" aria-label="Pagination">
       <ButtonComponent @click="previousPage" title="Previous Page" aria-label="Previous Page" />
       <span>|</span>
       <ButtonComponent @click="nextPage" title="Next Page" aria-label="Next Page" />
@@ -98,10 +98,10 @@ watch(search, (newVal) => {
   </main>
 
   <section v-if="data.length === 0 && !isLoading">
-    <h2 class="profileresults__notfound">No users found</h2>
+    <h2 class="search__notfound">No users found</h2>
   </section>
   <section v-if="data.length === 0 && isLoading">
-    <h2 class="profileresults__notfound">Loading...</h2>
+    <h2 class="search__notfound">Loading...</h2>
   </section>
 </template>
 
@@ -109,18 +109,18 @@ watch(search, (newVal) => {
 <style lang="scss" scoped>
 @import '../assets/style.scss';
 
-.wrapper {
+.search {
   margin-bottom: 80px;
 }
 
-.profileresults__container {
+.search__container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding: 0 4rem;
 }
 
-.profileresults__container-cards {
+.search__container-cards {
   margin-top: 50px;
   display: flex;
   justify-content: space-evenly;
@@ -130,7 +130,7 @@ watch(search, (newVal) => {
   max-width: 1350px;
 }
 
-.profileresults__container-pagination {
+.search__pagination {
   display: flex;
   justify-content: flex-end;
   width: 100%;
@@ -139,7 +139,7 @@ watch(search, (newVal) => {
   margin: auto;
 }
 
-.profileresults__notfound {
+.search__notfound {
   text-align: center;
   margin: 50px;
 }
