@@ -8,5 +8,5 @@ const url = ref(`https://randomuser.me/api/?seed=bristol&results=10`)
 
 <template>
   <NavigationBar aria-label="Navigation Bar" />
-  <HomeView :url="url" :show-search="true" aria-label="Profile results component" />
+  <HomeView :url="url" :show-search="true" aria-label="Profile results" />
 </template>

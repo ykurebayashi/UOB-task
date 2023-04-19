@@ -18,12 +18,12 @@ watch(localSearch, (newValue) => {
 </script>
 
 <template>
-    <div class="searchbar1">
+    <form class="searchbar1">
         <div class="searchbar__container">
             <p class="searchbar__container-title">Search by name</p>
             <input v-model="localSearch" class="searchbar__container-input" type="text" aria-label="Search input" />
         </div>
-    </div>
+    </form>
 </template>
   
 

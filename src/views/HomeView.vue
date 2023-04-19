@@ -79,30 +79,30 @@ watch(search, (newVal) => {
 </script>
 
 <template>
-  <div class="wrapper" role="main" aria-label="Search Results">
+  <main class="wrapper" role="main" aria-label="Search Results">
     <SearchBar v-if="showSearch" :search="search" @update:search="search = $event" aria-label="Search Bar" />
 
-    <div v-if="data.length !== 0" class="profileresults__container">
+    <section v-if="data.length !== 0" class="profileresults__container">
       <div class="profileresults__container-cards" role="list">
         <CardsSection v-for="element in data" :key="element.phone" :name="element.name.first + ' ' + element.name.last"
           :treatment="element.name.title" :location="element.location.city + '/' + element.location.country"
           :image="element.picture.large" :phone="element.cell" :email="element.email" role="listitem" />
       </div>
-    </div>
+    </section>
 
-    <div v-if="data.length !== 0" class="profileresults__container-pagination" role="navigation" aria-label="Pagination">
+    <nav v-if="data.length !== 0" class="profileresults__container-pagination" role="navigation" aria-label="Pagination">
       <ButtonComponent @click="previousPage" title="Previous Page" aria-label="Previous Page" />
       <span>|</span>
       <ButtonComponent @click="nextPage" title="Next Page" aria-label="Next Page" />
-    </div>
-  </div>
+    </nav>
+  </main>
 
-  <div v-if="data.length === 0 && !isLoading">
+  <section v-if="data.length === 0 && !isLoading">
     <h2 class="profileresults__notfound">No users found</h2>
-  </div>
-  <div v-if="data.length === 0 && isLoading">
+  </section>
+  <section v-if="data.length === 0 && isLoading">
     <h2 class="profileresults__notfound">Loading...</h2>
-  </div>
+  </section>
 </template>
 
 
@@ -140,7 +140,6 @@ watch(search, (newVal) => {
 }
 
 .profileresults__notfound {
-  width: 100%;
   text-align: center;
   margin: 50px;
 }
