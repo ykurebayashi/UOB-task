@@ -27,7 +27,7 @@ const { url, showSearch } = toRefs(props);
 const fetchData = async (param) => {
   isLoading.value = true;
   try {
-    const response = await fetch(`${url.value}${param}`);
+    const response = await fetch(`${actuallURL.value}${param}`);
     const prematureData = await response.json();
     data.value = prematureData.results;
   } catch (e) {
@@ -76,10 +76,20 @@ watch(search, (newVal) => {
   }
 });
 
+
+// Example of filter from inside
+
+const actuallURL = ref(url.value);
+
+watch(actuallURL, () => {
+  fetchData('&page=1')
+})
+
 </script>
 
 <template>
   <main class="search" role="main" aria-label="Search Results">
+    <ButtonComponent @click="actuallURL = actuallURL + '&nat=BR'" title="Filter Brazilians only" />
     <SearchBar v-if="showSearch" :search="search" @update:search="search = $event" aria-label="Search Bar" />
 
     <section v-if="data.length !== 0" class="search__container">
@@ -95,14 +105,14 @@ watch(search, (newVal) => {
       <span>|</span>
       <ButtonComponent @click="nextPage" title="Next Page" aria-label="Next Page" />
     </nav>
-  </main>
 
-  <section v-if="data.length === 0 && !isLoading">
-    <h2 class="search__notfound">No users found</h2>
-  </section>
-  <section v-if="data.length === 0 && isLoading">
-    <h2 class="search__notfound">Loading...</h2>
-  </section>
+    <section v-if="data.length === 0 && !isLoading">
+      <h2 class="search__notfound">No users found</h2>
+    </section>
+    <section v-if="data.length === 0 && isLoading">
+      <h2 class="search__notfound">Loading...</h2>
+    </section>
+  </main>
 </template>
 
 
