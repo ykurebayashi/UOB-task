@@ -31,13 +31,13 @@ const { name, image, location, phone, email, treatment } = toRefs(props);
 </script>
 
 <template>
-    <div class="card">
+    <article class="card">
         <img class="card__img" :alt="'Image of' + name" :src="image" />
-        <div class="card__infos">
+        <section class="card__infos">
             <div class="card__infos-personal">
-                <h2 class="card__info-personal__treatment" aria-label="Treatment">{{ treatment }}</h2>
-                <h2 class="card__info-personal__name" aria-label="Name">{{ name }}</h2>
-                <h3 class="card__info-personal__location" aria-label="Location">{{ location }}</h3>
+                <h3 class="card__info-personal__treatment" aria-label="Treatment">{{ treatment }}</h3>
+                <h4 class="card__info-personal__name" aria-label="Name">{{ name }}</h4>
+                <p class="card__info-personal__location" aria-label="Location">{{ location }}</p>
             </div>
             <div class="card__info-buttons">
                 <a class="card__info-buttons__phone" :href="'tel:' + phone" aria-label="Call icon">
@@ -58,8 +58,8 @@ const { name, image, location, phone, email, treatment } = toRefs(props);
                     </svg>
                 </a>
             </div>
-        </div>
-    </div>
+        </section>
+    </article>
 </template>
 
 <style lang="scss" scopde>
